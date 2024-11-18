@@ -137,7 +137,6 @@
 // #include <Wire.h>
 // #include "RTClib.h"
 // RTC_DS1307 rtc;
-// char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
 // void setup () {
 //   Serial.begin(9600);
@@ -147,17 +146,7 @@
 //     Serial.flush();
 //     abort();
 //   }
-
-//   if (! rtc.isrunning()) {
-//     Serial.println("RTC is NOT running, let's set the time!");
-//     // When time needs to be set on a new device, or after a power loss, the
-//     // following line sets the RTC to the date & time this sketch was compiled
-//     // rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-//     // This line sets the RTC with an explicit date & time, for example to set
-//     // January 21, 2014 at 3am you would call:
-//     rtc.adjust(DateTime(2024, 9, 10, 2, 20, 0));
-//   }
-
+//     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
 // }
 
 // void loop () {
@@ -168,9 +157,7 @@
 //     Serial.print(now.month(), DEC);
 //     Serial.print('/');
 //     Serial.print(now.day(), DEC);
-//     Serial.print(" (");
-//     Serial.print(daysOfTheWeek[now.dayOfTheWeek()]);
-//     Serial.print(") ");
+//     Serial.println();
 //     Serial.print(now.hour(), DEC);
 //     Serial.print(':');
 //     Serial.print(now.minute(), DEC);
@@ -178,7 +165,100 @@
 //     Serial.print(now.second(), DEC);
 //     Serial.println();
 //     Serial.println();
-//     delay(3000);
+//     delay(1000);
+// }
+
+//---------------------------------------------------------------------------------
+
+// #include <Wire.h>
+// #include "RTClib.h"
+
+// RTC_DS1307 rtc;
+
+// void setup () {
+//   Serial.begin(9600);
+
+//   if (! rtc.begin()) {
+//     Serial.println("Couldn't find RTC");
+//     Serial.flush();
+//     abort();
+//   }
+
+//   // Uncomment the following lines to set the RTC to a known time for testing
+//   // Serial.println("RTC is NOT running, let's set the time!");
+//   // rtc.adjust(DateTime(2024, 9, 10, 3, 18, 20)); // Set to 2:20 PM for testing
+// }
+
+// void loop () {
+//     DateTime now = rtc.now();
+
+//     Serial.print("Current Date and Time: ");
+//     Serial.print(now.day(), DEC);
+//     Serial.print('/');
+//     Serial.print(now.month(), DEC);
+//     Serial.print('/');
+//     Serial.print(now.year(), DEC);
+//     Serial.print(' ');
+
+//     // Convert to 12-hour format
+//     int hour = now.hour();
+//     String period = "PM";
+//     if (hour == 0) {
+//         hour = 12; // Midnight case
+//     } else if (hour == 12) {
+//         period = "PM"; // Noon case
+//     } else if (hour > 12) {
+//         hour -= 12;
+//         period = "PM";
+//     }
+
+//     Serial.print(hour, DEC);
+//     Serial.print(':');
+//     Serial.print(now.minute(), DEC);
+//     Serial.print(':');
+//     Serial.print(now.second(), DEC);
+//     Serial.print(' ');
+//     Serial.print(period);
+//     Serial.println();
+//     Serial.println();
+//     delay(1000);
+// }
+
+//----------------------------------------------------------------------------------------------
+
+// final sender arduino not synced
+
+// #include <Wire.h>
+// #include "RTClib.h"
+
+// RTC_DS1307 rtc;
+
+// void setup() {
+//   Serial.begin(115200);
+
+//   if (!rtc.begin()) {
+//     Serial.println("Couldn't find RTC");
+//     Serial.flush();
+//     abort();
+//   }
+
+//   // Uncomment the following line to set the RTC to the current date & time
+//   rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+// }
+
+// void loop() {
+//   DateTime now = rtc.now();
+
+//   // Format: YYYY-MM-DD HH:MM:SS
+//   char dateTimeString[20]; // Buffer to hold the formatted string
+//   snprintf(dateTimeString, sizeof(dateTimeString), "%04d-%02d-%02d %02d:%02d:%02d",
+//            now.year(), now.month(), now.day(),
+//            now.hour(), now.minute(), now.second());
+
+//   // Print the formatted date-time string
+//   Serial.println(dateTimeString);
+
+//   delay(1000);
 // }
 
 //---------------------------------------------------------------------------------
@@ -187,53 +267,35 @@
 #include "RTClib.h"
 
 RTC_DS1307 rtc;
-char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
-void setup () {
-  Serial.begin(9600);
+void setup() {
+  Serial.begin(115200);
 
-  if (! rtc.begin()) {
+  if (!rtc.begin()) {
     Serial.println("Couldn't find RTC");
     Serial.flush();
     abort();
   }
 
-  // Uncomment the following lines to set the RTC to a known time for testing
-  // Serial.println("RTC is NOT running, let's set the time!");
-  // rtc.adjust(DateTime(2024, 9, 10, 3, 18, 20)); // Set to 2:20 PM for testing
+  // Uncomment the following line to set the RTC to the current date & time
+  rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
 }
 
-void loop () {
-    DateTime now = rtc.now();
+void loop() {
+  DateTime now = rtc.now();
 
-    Serial.print("Current Date and Time: ");
-    Serial.print(now.day(), DEC);
-    Serial.print('/');
-    Serial.print(now.month(), DEC);
-    Serial.print('/');
-    Serial.print(now.year(), DEC);
-    Serial.print(' ');
+  // Format: YYYY-MM-DD HH:MM:SS
+  char dateTimeString[20];
+  snprintf(dateTimeString, sizeof(dateTimeString), "%04d-%02d-%02d %02d:%02d:%02d",
+           now.year(), now.month(), now.day(),
+           now.hour(), now.minute(), now.second());
 
-    // Convert to 12-hour format
-    int hour = now.hour();
-    String period = "PM";
-    if (hour == 0) {
-        hour = 12; // Midnight case
-    } else if (hour == 12) {
-        period = "PM"; // Noon case
-    } else if (hour > 12) {
-        hour -= 12;
-        period = "PM";
-    }
+  // Send data with delimiters
+  Serial.print('<');          // Start delimiter
+  Serial.print(dateTimeString);
+  Serial.println('>');        // End delimiter
 
-    Serial.print(hour, DEC);
-    Serial.print(':');
-    Serial.print(now.minute(), DEC);
-    Serial.print(':');
-    Serial.print(now.second(), DEC);
-    Serial.print(' ');
-    Serial.print(period);
-    Serial.println();
-    Serial.println();
-    delay(1000);
+  delay(1000); // Send data every second
 }
+
+

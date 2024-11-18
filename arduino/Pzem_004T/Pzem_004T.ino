@@ -1,7 +1,7 @@
 #include <PZEM004Tv30.h>
 #include <Wire.h>
 
-PZEM004Tv30 pzem(8, 9);  // Software Serial pin 8 (RX) & 9 (TX)
+PZEM004Tv30 pzem(6, 7);  // Software Serial TX-pin 6 RX - 7
 
 void setup() {
   Serial.begin(9600);
@@ -27,23 +27,23 @@ void loop() {
   }
 
   float power = pzem.power();
-  // if (current != NAN) {
-  //   Serial.print("Power: ");
-  //   Serial.print(power);
-  //   Serial.println("W");
-  // } else {
-  //   Serial.println("Error reading power");
-  // }
+  if (current != NAN) {
+    Serial.print("Power: ");
+    Serial.print(power);
+    Serial.println("W");
+  } else {
+    Serial.println("Error reading power");
+  }
 
   float energy = pzem.energy();
-  // if (current != NAN) {
-  //   Serial.print("Energy: ");
-  //   Serial.print(energy, 3);
-  //   Serial.println("kWh");
+  if (current != NAN) {
+    Serial.print("Energy: ");
+    Serial.print(energy, 3);
+    Serial.println("kWh");
 
-  // } else {
-  //   Serial.println("Error reading energy");
-  // }
+  } else {
+    Serial.println("Error reading energy");
+  }
 
   float frequency = pzem.frequency();
   if (current != NAN) {
