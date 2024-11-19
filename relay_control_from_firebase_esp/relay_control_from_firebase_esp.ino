@@ -4,8 +4,8 @@
 #include "addons/RTDBHelper.h"
 
 // Firebase Configuration
-#define API_KEY "AIzaSyBaGCN2sjd9JSyosAj0EJFqbKPb8Y-13lY"
-#define DATABASE_URL "http://relay-cf260-default-rtdb.firebaseio.com/"
+#define API_KEY "XXXXX"
+#define DATABASE_URL "XXXXX"
 
 // Pins
 #define RELAY_PIN 10 // GPIO10
