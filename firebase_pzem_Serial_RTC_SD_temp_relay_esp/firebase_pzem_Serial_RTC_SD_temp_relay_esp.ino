@@ -10,8 +10,8 @@
 #include "addons/RTDBHelper.h"
 
 // WiFi and Firebase Configurations
-#define API_KEY "AIzaSyBaGCN2sjd9JSyosAj0EJFqbKPb8Y-13l"
-#define DATABASE_URL "http://relay-cf260-default-rtdb.firebaseio.com/"
+#define API_KEY "XXXXX"
+#define DATABASE_URL "XXXXX"
 #define WIFI_SSID "Mahajan"
 #define WIFI_PASSWORD "#Rohan@25&"
 
