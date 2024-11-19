@@ -3,8 +3,8 @@
 #include "addons/TokenHelper.h"
 #include "addons/RTDBHelper.h"
 
-#define API_KEY "AIzaSyBaGCN2sjd9JSyosAj0EJFqbKPb8Y-13lY"
-#define DATABASE_URL "http://relay-cf260-default-rtdb.firebaseio.com/"
+#define API_KEY "XXXXX"
+#define DATABASE_URL "XXXXX"
 
 FirebaseData fbdo;
 FirebaseAuth auth;
